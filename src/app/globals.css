@@ -1,0 +1,103 @@
+/* src/app/globals.css */
+/* 
+  Design direction: "Refined Academy"
+  — Deep forest green primary with warm gold accents
+  — Playfair Display (serif) for headings, DM Sans for body
+  — Premium card shadows, subtle grain overlay, clean grid
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Brand Palette */
+  --forest:     #1a3a2a;   /* primary deep green */
+  --forest-mid: #2d5a40;   /* hover states */
+  --forest-light: #3d7a55; /* active / selected */
+  --gold:       #c9a84c;   /* accent */
+  --gold-light: #e8c97a;   /* hover gold */
+  --cream:      #f4f4f2;   /* page background - neutral gray */
+  --cream-dark: #f4f4f2;   /* card alt bg - same as main */
+  --ink:        #1c1c1e;   /* primary text */
+  --ink-muted:  #5a5a5a;   /* secondary text */
+  --ink-subtle: #9a9a9a;   /* placeholder/hints */
+  --border:     #ddd8cc;   /* dividers */
+  --white:      #ffffff;
+
+  /* Status colors */
+  --urgent: #c0392b;
+  --high:   #d68910;
+  --success: #1e8449;
+
+  /* Spacing scale */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
+  --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+  --sp-8: 32px; --sp-10: 40px; --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  /* Radii */
+  --r-sm: 6px;  --r-md: 12px;  --r-lg: 20px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 16px rgba(26, 58, 42, 0.08), 0 1px 4px rgba(26, 58, 42, 0.05);
+  --shadow-card-hover: 0 8px 32px rgba(26, 58, 42, 0.14), 0 2px 8px rgba(26, 58, 42, 0.08);
+  --shadow-sidebar: 4px 0 24px rgba(26, 58, 42, 0.12);
+
+  /* Transitions */
+  --t-fast: 150ms ease;
+  --t-med: 250ms ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  line-height: 1.25;
+  color: var(--forest);
+}
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream-dark); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* Utility classes */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); border: 0;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+}

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <rect width="120" height="120" fill="#1a3a2a" rx="8"/>
+  
+  <!-- Gold accent circle -->
+  <circle cx="60" cy="60" r="55" fill="none" stroke="#c9a84c" stroke-width="2"/>
+  
+  <!-- Graduation cap -->
+  <g>
+    <!-- Cap -->
+    <polygon points="35,55 60,40 85,55" fill="#c9a84c"/>
+    <!-- Board -->
+    <rect x="30" y="55" width="60" height="6" fill="#c9a84c"/>
+    <!-- Tassel -->
+    <line x1="60" y1="61" x2="60" y2="85" stroke="#c9a84c" stroke-width="2"/>
+    <!-- Ball -->
+    <circle cx="60" cy="88" r="3" fill="#c9a84c"/>
+  </g>
+  
+  <!-- Book symbol -->
+  <g>
+    <!-- Left page -->
+    <path d="M 40 70 L 40 95 L 52 95 L 52 70" fill="none" stroke="#e8d5b7" stroke-width="1.5"/>
+    <!-- Right page -->
+    <path d="M 68 70 L 68 95 L 80 95 L 80 70" fill="none" stroke="#e8d5b7" stroke-width="1.5"/>
+    <!-- Spine -->
+    <line x1="52" y1="70" x2="68" y2="70" stroke="#e8d5b7" stroke-width="1.5"/>
+    <line x1="52" y1="95" x2="68" y2="95" stroke="#e8d5b7" stroke-width="1.5"/>
+  </g>
+  
+  <!-- School name below (text would go here if needed) -->
+</svg>
