@@ -83,7 +83,7 @@ export default function LoginPage() {
               border: "2px solid #C9A84C"
             }}>
               {/* School Logo Placeholder */}
-              <img src="/narty-rock-logo.svg" alt="Narty Rock Logo" style={{ width: "100%", height: "100%" }} />
+              <img src="/assets/slogo.png" alt="Logo"  style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
             <h1 style={{
               fontFamily: "var(--font-display)", color: "white",

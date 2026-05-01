@@ -25,8 +25,8 @@ const NAV: NavItem[] = [
   { label: "Announcements",href: "/student/announcements",        icon: <Bell size={18}/>,            roles: ["student"] },
   { label: "Homework",     href: "/teacher/homework",             icon: <BookOpen size={18}/>,        roles: ["teacher"] },
   { label: "Homework",     href: "/student/homework",             icon: <BookOpen size={18}/>,        roles: ["student"] },
-  { label: "Report Cards", href: "/admin/report-cards",           icon: <FileText size={18}/>,        roles: ["admin"] },
-  { label: "Report Cards", href: "/teacher/report-cards",         icon: <FileText size={18}/>,        roles: ["teacher"] },
+  { label: "Report Cards", href: "/admin/report-cards",           icon: <img src="/assets/slogo.png" alt="" style={{ width: 18, height: 18, objectFit: "contain" }} />, roles: ["admin"] },
+  { label: "Report Cards", href: "/teacher/report-cards",         icon: <img src="/assets/slogo.png" alt="" style={{ width: 18, height: 18, objectFit: "contain" }} />, roles: ["teacher"] },
   // HRM Module (Admin only)
   { label: "Employees",    href: "/admin/hrm/employees",          icon: <Users size={18}/>,           roles: ["admin"] },
   { label: "Payroll Configuration", href: "/admin/hrm/payroll-config", icon: <DollarSign size={18}/>, roles: ["admin"] },
@@ -83,7 +83,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
               overflow: "hidden",
               border: "1.5px solid #C9A84C"
             }}>
-              <img src="/narty-rock-logo.svg" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              <img src="/assets/slogo.png" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
             <div>
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.95rem", lineHeight: 1.2 }}>
@@ -217,7 +217,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
             overflow: "hidden",
             border: "1px solid #C9A84C"
           }}>
-            <img src="/narty-rock-logo.svg" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            <img src="/assets/slogo.png" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
           
           <div style={{ flex: 1 }}>

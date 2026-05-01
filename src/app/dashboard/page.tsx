@@ -111,7 +111,7 @@ export default function DashboardPage() {
         {(user.role === "admin" || user.role === "teacher") && (
           <StatCard
             href={user.role === "admin" ? "/admin/report-cards" : "/teacher/report-cards"}
-            icon={<FileText size={22} />}
+            icon={<img src="/assets/slogo.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />}
             label="Report Cards"
             value={reportCards.length}
             sub="Generated this term"
@@ -182,13 +182,13 @@ export default function DashboardPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-3)" }}>
             {user.role === "admin" && <>
               <QuickAction href="/admin/announcements" icon={<Megaphone size={18} />} label="Post Announcement" color="#C9A84C" />
-              <QuickAction href="/admin/report-cards" icon={<FileText size={18} />} label="Generate Report Card" color="#1A2554" />
-              <QuickAction href="/admin/hrm/employees" icon={<Users size={18} />} label="Manage Employees" color="#1E2B63" />
-              <QuickAction href="/admin/hrm/payslips" icon={<FileText size={18} />} label="Process Payroll" color="#1A2554" />
+              <QuickAction href="/admin/report-cards" icon={<img src="/assets/slogo.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />} label="Generate Report Card" color="#1A2554" />
+              <QuickAction href="/admin/hrm/employees" icon={<Users size={18} />} label="Manage Employees" color="#1E2B63" /> 
+              <QuickAction href="/admin/hrm/payslips" icon={<img src="/assets/slogo.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />} label="Process Payroll" color="#1A2554" />
             </>}
             {user.role === "teacher" && <>
               <QuickAction href="/teacher/homework" icon={<BookOpen size={18} />} label="Post Homework" color="#D4A843" />
-              <QuickAction href="/teacher/report-cards" icon={<FileText size={18} />} label="Enter Student Grades" color="#1A2554" />
+              <QuickAction href="/teacher/report-cards" icon={<img src="/assets/slogo.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />} label="Enter Student Grades" color="#1A2554" />
             </>}
             {user.role === "student" && <>
               <QuickAction href="/student/homework" icon={<BookOpen size={18} />} label="View My Homework" color="#D4A843" />

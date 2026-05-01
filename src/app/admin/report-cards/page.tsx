@@ -259,8 +259,8 @@ export default function AdminReportCardsPage() {
                     width: 48, height: 48, borderRadius: "var(--r-sm)",
                     background: "rgba(26,58,42,0.08)", display: "flex",
                     alignItems: "center", justifyContent: "center", color: "var(--forest)",
-                  }}>
-                    <FileText size={22} />
+                  }}> 
+                    <img src="/assets/slogo.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                   </div>
                   <Badge label={grade} variant={grade.startsWith("A") ? "success" : grade === "F" ? "urgent" : "forest"} />
                 </div>
