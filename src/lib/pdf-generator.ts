@@ -2,7 +2,6 @@
 // Server-side PDF generation for payslips using PDFKit.
 // This file should only be used in API routes (server-side).
 
-import PDFDocument from "pdfkit";
 import { Readable } from "stream";
 import { PayrollRecord, Employee, PayrollStructure } from "@/data/mockData";
 
@@ -25,6 +24,8 @@ interface PayslipGenerationInput {
 export async function generatePayslipPDF(
   input: PayslipGenerationInput
 ): Promise<Buffer> {
+  const { default: PDFDocument } = await import("pdfkit");
+
   return new Promise((resolve, reject) => {
     try {
       const doc = new PDFDocument({

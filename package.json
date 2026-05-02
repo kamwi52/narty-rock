@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "node ./scripts/patch-fontkit.js"
   },
   "dependencies": {
     "googleapis": "^171.4.0",
@@ -23,5 +24,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5"
+  },
+  "overrides": {
+    "fontkit": {
+      "@swc/helpers": "0.3.17"
+    }
   }
 }
