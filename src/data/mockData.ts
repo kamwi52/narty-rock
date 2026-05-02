@@ -63,11 +63,11 @@ export interface ReportCard {
 // ── Mock Users ──────────────────────────────────────────────────────────────
 export const USERS: User[] = [
   { id: "u1", name: "Mr. Carlos", role: "admin", avatar: "MC" },
-  { id: "u2", name: "Teacher Fenny", role: "teacher", subject: "Mathematics", avatar: "TF" },
+  { id: "u2", name: "Teacher Fein", role: "teacher", subject: "Mathematics", avatar: "TF" },
   { id: "u3", name: "Ms. Mwale", role: "teacher", subject: "English Language", avatar: "MM" },
-  { id: "u4", name: "Thandeka Dube", role: "student", classId: "10A", avatar: "TD" },
-  { id: "u5", name: "Chanda Mutale", role: "student", classId: "10A", avatar: "CM" },
-  { id: "u6", name: "Lweendo Siame", role: "student", classId: "11B", avatar: "LS" },
+  { id: "u4", name: "Thandeka Dube", role: "student", classId: "Grade 1", avatar: "TD" },
+  { id: "u5", name: "Chanda Mutale", role: "student", classId: "Grade 1", avatar: "CM" },
+  { id: "u6", name: "Lweendo Siame", role: "student", classId: "Grade 2", avatar: "LS" },
 ];
 
 // Hardcoded session — in prod, replace with NextAuth or JWT
@@ -115,17 +115,17 @@ export let homework: HomeworkAssignment[] = [
   {
     id: "h1",
     subject: "Mathematics",
-    classId: "10A",
+    classId: "Grade 1",
     title: "Quadratic Equations — Exercise 7B",
     description: "Complete all questions in Exercise 7B on pages 134–136 of the Algebra textbook. Show all working clearly. Questions involving the quadratic formula must display the discriminant step.",
     dueDate: "2026-04-23",
-    postedBy: "Teacher Fenny",
+    postedBy: "Teacher Fein",
     postedAt: "2026-04-18",
   },
   {
     id: "h2",
     subject: "English Language",
-    classId: "10A",
+    classId: "Grade 1",
     title: "Argumentative Essay — First Draft",
     description: 'Write a 600-word argumentative essay on the topic: "Social media does more harm than good to young people." Include an introduction, three body paragraphs with evidence, and a conclusion. Submit handwritten draft.',
     dueDate: "2026-04-25",
@@ -135,17 +135,17 @@ export let homework: HomeworkAssignment[] = [
   {
     id: "h3",
     subject: "Mathematics",
-    classId: "11B",
+    classId: "Grade 2",
     title: "Differentiation — Chain Rule Problems",
     description: "From the Additional Mathematics workbook, attempt all problems in Chapter 12, Section C. You must show substitution steps for each chain rule application. Answers without working will not be marked.",
     dueDate: "2026-04-22",
-    postedBy: "Teacher Fenny",
+    postedBy: "Teacher Fein",
     postedAt: "2026-04-16",
   },
   {
     id: "h4",
     subject: "English Language",
-    classId: "11B",
+    classId: "Grade 2",
     title: "Poetry Analysis — 'The Road Not Taken'",
     description: "Analyse the poem 'The Road Not Taken' by Robert Frost. Your response should identify at least two literary devices, discuss the theme of choice, and include your personal interpretation. Minimum 400 words.",
     dueDate: "2026-04-24",
@@ -160,8 +160,8 @@ export let reportCards: ReportCard[] = [
     id: "r1",
     studentId: "u4",
     studentName: "Thandeka Dube",
-    classId: "10A",
-    className: "Form 4A",
+    classId: "Grade 1",
+    className: "Grade 1",
     term: "Term 1",
     year: "2026",
     grades: [
@@ -191,7 +191,7 @@ export function computeGrade(total: number): { grade: string; remarks: string } 
   return { grade: "F", remarks: "Fail" };
 }
 
-export const CLASSES = ["8A", "8B", "9A", "9B", "10A", "10B", "11A", "11B", "12A", "12B"];
+export const CLASSES = ["Pre-School", "Middle Class", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7"];
 export const SUBJECTS = [
   "Mathematics", "English Language", "Physics", "Chemistry",
   "Biology", "Geography", "History", "Civic Education",
@@ -322,8 +322,8 @@ export interface PayrollCycle {
 export let employees: Employee[] = [
   {
     id: "emp1",
-    name: "Teacher Fenny",
-    email: "fenny@nartyrock.edu.zm",
+    name: "Teacher Fein",
+    email: "fein@nartyrock.edu.zm",
     phone: "+260 971 123 456",
     role: "Teacher",
     department: "Mathematics",
@@ -333,7 +333,7 @@ export let employees: Employee[] = [
     bankCode: "ZANZ",
     taxId: "TAX-2020-TF",
     dependents: 2,
-    nextOfKin: "Jennifer Fenny",
+    nextOfKin: "Jennifer Fein",
     nextOfKinPhone: "+260 971 123 457",
     createdAt: "2020-01-15",
     updatedAt: "2026-04-20",

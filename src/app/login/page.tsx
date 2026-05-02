@@ -20,7 +20,7 @@ const DEMO_ACCOUNTS = [
   {
     key: "teacher_math",
     role: "Teacher — Mathematics",
-    name: "Teacher Fenny",
+    name: "Teacher Fein",
     icon: <BookOpen size={20} />,
     accent: "#D4A843",
     bg: "rgba(212,168,67,0.1)",
@@ -28,7 +28,7 @@ const DEMO_ACCOUNTS = [
   },
   {
     key: "student_10a",
-    role: "Student — Form 4A",
+    role: "Student — Grade 1",
     name: "Thandeka Dube",
     icon: <Users size={20} />,
     accent: "#FFFFFF",

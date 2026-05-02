@@ -29,8 +29,8 @@ export default function AdminReportCardsPage() {
   // Form state
   const [form, setForm] = useState({
     studentName: "",
-    classId: CLASSES[4],
-    className: "Form 4A",
+    classId: CLASSES[2],
+    className: CLASSES[2],
     term: TERMS[0],
     year: "2026",
     attendancePresent: "",
@@ -69,7 +69,7 @@ export default function AdminReportCardsPage() {
       studentId: `s${Date.now()}`,
       studentName: form.studentName,
       classId: form.classId,
-      className: form.className || `Form ${form.classId}`,
+      className: form.className || form.classId,
       term: form.term,
       year: form.year,
       grades: fullGrades,
@@ -126,8 +126,8 @@ export default function AdminReportCardsPage() {
                     placeholder="e.g. Thandeka Dube" />
                 </div>
                 <Select label="Class" value={form.classId}
-                  onChange={e => setForm(f => ({ ...f, classId: e.target.value, className: `Form ${e.target.value}` }))}
-                  options={CLASSES.map(c => ({ value: c, label: `Form ${c}` }))} />
+                  onChange={e => setForm(f => ({ ...f, classId: e.target.value, className: e.target.value }))}
+                  options={CLASSES.map(c => ({ value: c, label: c }))} />
                 <Select label="Term" value={form.term}
                   onChange={e => setForm(f => ({ ...f, term: e.target.value }))}
                   options={TERMS.map(t => ({ value: t, label: t }))} />

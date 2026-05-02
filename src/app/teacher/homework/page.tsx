@@ -94,7 +94,7 @@ export default function TeacherHomeworkPage() {
               label="Class"
               value={form.classId}
               onChange={e => setForm(f => ({ ...f, classId: e.target.value }))}
-              options={CLASSES.map(c => ({ value: c, label: `Form ${c}` }))}
+              options={CLASSES.map(c => ({ value: c, label: c }))}
             />
             <div style={{ gridColumn: "span 2" }}>
               <Textarea
@@ -135,7 +135,7 @@ export default function TeacherHomeworkPage() {
               fontSize: "0.8rem", fontWeight: 600, cursor: "pointer",
               fontFamily: "var(--font-body)", transition: "all var(--t-fast)",
             }}>
-            {c === "all" ? "All Classes" : `Form ${c}`}
+            {c === "all" ? "All Classes" : c}
           </button>
         ))}
       </div>
@@ -162,7 +162,7 @@ export default function TeacherHomeworkPage() {
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--sp-2)", marginBottom: "var(--sp-2)" }}>
                       <h3 style={{ fontSize: "0.95rem", fontFamily: "var(--font-display)" }}>{hw.title}</h3>
                       <Badge label={hw.subject} variant="forest" />
-                      <Badge label={`Form ${hw.classId}`} variant="gold" />
+                      <Badge label={hw.classId} variant="gold" />
                     </div>
                     <p style={{ fontSize: "0.86rem", color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: "var(--sp-3)" }}>
                       {hw.description}

@@ -34,7 +34,7 @@ export default function StudentHomeworkPage() {
     <PortalShell>
       <PageHeader
         title="My Homework"
-        subtitle={`Showing assignments for ${myClass ? `Form ${myClass}` : "your class"}. Sorted by due date.`}
+        subtitle={`Showing assignments for ${myClass || "your class"}. Sorted by due date.`}
       />
 
       {/* Subject filter */}

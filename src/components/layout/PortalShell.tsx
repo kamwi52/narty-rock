@@ -25,8 +25,8 @@ const NAV: NavItem[] = [
   { label: "Announcements",href: "/student/announcements",        icon: <Bell size={18}/>,            roles: ["student"] },
   { label: "Homework",     href: "/teacher/homework",             icon: <BookOpen size={18}/>,        roles: ["teacher"] },
   { label: "Homework",     href: "/student/homework",             icon: <BookOpen size={18}/>,        roles: ["student"] },
-  { label: "Report Cards", href: "/admin/report-cards",           icon: <img src="/assets/slogo.png" alt="" style={{ width: 18, height: 18, objectFit: "contain" }} />, roles: ["admin"] },
-  { label: "Report Cards", href: "/teacher/report-cards",         icon: <img src="/assets/slogo.png" alt="" style={{ width: 18, height: 18, objectFit: "contain" }} />, roles: ["teacher"] },
+  { label: "Report Cards", href: "/admin/report-cards",           icon: <FileText size={18}/>,        roles: ["admin"] },
+  { label: "Report Cards", href: "/teacher/report-cards",         icon: <FileText size={18}/>,        roles: ["teacher"] },
   // HRM Module (Admin only)
   { label: "Employees",    href: "/admin/hrm/employees",          icon: <Users size={18}/>,           roles: ["admin"] },
   { label: "Payroll Configuration", href: "/admin/hrm/payroll-config", icon: <DollarSign size={18}/>, roles: ["admin"] },
