@@ -32,8 +32,11 @@ export async function POST(request: NextRequest) {
     const generated: Payslip[] = [];
     const errors: Array<{ recordId: string; error: string }> = [];
 
-    // Create payslips directory if it doesn't exist
-    const pdfDir = path.join(process.cwd(), "public", "payslips");
+    // NOTE: The production filesystem on Netlify is read-only. 
+    // We use /tmp for ephemeral processing, but these files won't be 
+    // accessible via static URLs. In production, upload to a storage bucket.
+    const pdfDir = path.join("/tmp", "payslips");
+
     if (!fs.existsSync(pdfDir)) {
       fs.mkdirSync(pdfDir, { recursive: true });
     }
