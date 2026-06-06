@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EmployeeStatus {
+  active
+  inactive
+  on_leave
+}
+
+model Employee {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  phone           String
+  role            String           // "Teacher", "Support Staff", etc.
+  department      String           // "Science", "Languages", etc.
+  joiningDate     DateTime
+  status          EmployeeStatus   @default(active)
+  bankAccount     String?          // Encrypted at rest via Prisma extension
+  bankCode        String?
+  taxId           String?          // Encrypted at rest via Prisma extension
+  dependents      Int?             @default(0)
+  nextOfKin       String?
+  nextOfKinPhone  String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  payrollStructures PayrollStructure[]
+  payrollRecords    PayrollRecord[]
+  payslipSendLogs   PayslipSendLog[]
+}
+
+model PayrollStructure {
+  id              String   @id @default(cuid())
+  employeeId      String
+  employee        Employee @relation(fields: [employeeId], references: [id])
+  basePay         Float
+  
+  allowanceHousing        Float? @default(0)
+  allowanceTransport      Float? @default(0)
+  allowanceMeal           Float? @default(0)
+  allowanceResponsibility Float? @default(0)
+  allowanceOther          Float? @default(0)
+
+  deductionPension        Float? @default(0)
+  deductionHealthIns      Float? @default(0)
+  deductionUnionFees      Float? @default(0)
+  deductionLoan           Float? @default(0)
+  deductionOther          Float? @default(0)
+
+  taxBracket      String
+  taxRate         Float    // e.g., 0.15 for 15%
+  currency        String   @default("ZMW")
+  effectiveFrom   DateTime
+  effectiveTo     DateTime?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([employeeId])
+}
+
+model PayrollRecord {
+  id              String       @id @default(cuid())
+  payrollCycleId  String
+  payrollCycle    PayrollCycle @relation(fields: [payrollCycleId], references: [id])
+  employeeId      String
+  employee        Employee     @relation(fields: [employeeId], references: [id])
+  month           String       // YYYY-MM
+  workingDays     Int
+  daysWorked      Int
+  basePay         Float
+  allowancesTotal Float
+  grossPay        Float
+  deductionsTotal Float
+  taxDeduction    Float
+  netPay          Float
+  status          String       // "draft" | "approved" | "processed" | "paid"
+  notes           String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  payslip         Payslip?
+
+  @@unique([employeeId, month])
+}
+
+model PayrollCycle {
+  id        String   @id @default(cuid())
+  month     String   @unique // YYYY-MM
+  status    String   // "open" | "processing" | "completed" | "archived"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  records   PayrollRecord[]
+}
+
+model Payslip {
+  id              String        @id @default(cuid())
+  payrollRecordId String        @unique
+  payrollRecord   PayrollRecord @relation(fields: [payrollRecordId], references: [id])
+  employeeId      String
+  month           String        // YYYY-MM
+  pdfUrl          String?       // Gap 3: Migrate to cloud storage
+  generatedAt     DateTime      @default(now())
+  sentViaEmail    Boolean       @default(false)
+  sentAt          DateTime?
+
+  sendLog         PayslipSendLog?
+}
+
+model PayslipSendLog {
+  id             String   @id @default(cuid())
+  payslipId      String   @unique
+  payslip        Payslip  @relation(fields: [payslipId], references: [id])
+  employeeId     String
+  employee       Employee @relation(fields: [employeeId], references: [id])
+  recipientEmail String
+  sentAt         DateTime @default(now())
+  status         String   // "success" | "failed" | "pending" | "bounced"
+  messageId      String?
+  errorMessage   String?
+  attemptCount   Int      @default(1)
+  lastAttemptAt  DateTime @default(now())
+}

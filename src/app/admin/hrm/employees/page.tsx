@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Users, Plus, Edit2, Trash2, X, Eye, EyeOff, Check } from "lucide-react";
+import { Users, Plus, Edit2, Trash2, X, Check, Download, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import PortalShell from "@/components/layout/PortalShell";
 import { Card, Badge, Button, Input, Select, PageHeader, EmptyState } from "@/components/ui";
@@ -41,7 +41,8 @@ export default function HRMEmployeesPage() {
     status: "active",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "inactive">("active");
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "inactive" | "on-leave">("active");
+  const [query, setQuery] = useState("");
 
   // Authorization check
   useEffect(() => {
@@ -147,9 +148,42 @@ export default function HRMEmployeesPage() {
     setErrors({});
   };
 
-  const filtered = employees.filter((e) =>
-    filterStatus === "all" ? true : e.status === filterStatus
-  );
+  const filtered = employees.filter((employee) => {
+    const matchesStatus = filterStatus === "all" ? true : employee.status === filterStatus;
+    const haystack = [
+      employee.name,
+      employee.email,
+      employee.phone,
+      employee.role,
+      employee.department,
+      employee.taxId,
+    ].join(" ").toLowerCase();
+    return matchesStatus && haystack.includes(query.trim().toLowerCase());
+  });
+
+  const exportCsv = () => {
+    const headers = ["Name", "Email", "Phone", "Role", "Department", "Status", "Joining Date", "Tax ID"];
+    const rows = filtered.map((employee) => [
+      employee.name,
+      employee.email,
+      employee.phone,
+      employee.role,
+      employee.department,
+      employee.status,
+      employee.joiningDate,
+      employee.taxId || "",
+    ]);
+    const csv = [headers, ...rows]
+      .map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `employees-${filterStatus}-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   const statusBadgeColor = (status: string) => {
     if (status === "active") return "success";
@@ -170,15 +204,29 @@ export default function HRMEmployeesPage() {
       />
 
       {/* Filters */}
-      <div style={{ display: "flex", gap: "var(--sp-4)", marginBottom: "var(--sp-6)" }}>
-        {(["all", "active", "inactive"] as const).map((status) => (
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "var(--sp-4)", marginBottom: "var(--sp-4)", alignItems: "end" }}>
+        <Input
+          label="Search Employees"
+          placeholder="Name, email, role, department..."
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <Button variant="secondary" icon={<Download size={16} />} onClick={exportCsv} disabled={filtered.length === 0}>
+          Export CSV
+        </Button>
+      </div>
+
+      <div style={{ display: "flex", gap: "var(--sp-4)", marginBottom: "var(--sp-6)", flexWrap: "wrap" }}>
+        {(["all", "active", "on-leave", "inactive"] as const).map((status) => (
           <Button
             key={status}
             variant={filterStatus === status ? "primary" : "secondary"}
             size="sm"
             onClick={() => setFilterStatus(status)}
           >
-            {status.charAt(0).toUpperCase() + status.slice(1)} ({filtered.filter(e => e.status === (status === "all" ? e.status : status)).length})
+            {status.split("-").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ")} ({
+              employees.filter((employee) => status === "all" ? true : employee.status === status).length
+            })
           </Button>
         ))}
       </div>
@@ -264,7 +312,7 @@ export default function HRMEmployeesPage() {
 
       {/* Employee List */}
       {filtered.length === 0 ? (
-        <EmptyState icon={<Users size={48} />} title="No employees" body="No employees found. Add one to get started." />
+        <EmptyState icon={query ? <Search size={48} /> : <Users size={48} />} title="No employees" body="No employees match the current search and filters." />
       ) : (
         <div style={{ display: "grid", gap: "var(--sp-4)" }}>
           {filtered.map((emp) => (

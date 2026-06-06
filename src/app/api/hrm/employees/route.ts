@@ -4,6 +4,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import { employees, Employee } from "@/data/mockData";
 
+const EMPLOYEE_STATUSES = ["active", "inactive", "on-leave"];
+
+function validateEmployeePayload(body: Partial<Employee>, currentId?: string) {
+  const required = ["name", "email", "phone", "role", "department", "joiningDate"] as const;
+  for (const field of required) {
+    if (!body[field]?.toString().trim()) {
+      return `Field '${field}' is required`;
+    }
+  }
+
+  if (body.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+    return "A valid email address is required";
+  }
+
+  if (body.status && !EMPLOYEE_STATUSES.includes(body.status)) {
+    return "Employee status is invalid";
+  }
+
+  const duplicate = employees.find(
+    (employee) => employee.email.toLowerCase() === body.email?.toLowerCase() && employee.id !== currentId
+  );
+  if (duplicate) {
+    return "An employee with this email already exists";
+  }
+
+  return null;
+}
+
 /**
  * GET /api/hrm/employees
  * Retrieve all employees or a specific employee by ID
@@ -41,12 +69,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate required fields
-    const required = ["name", "email", "phone", "role", "department", "joiningDate"];
-    for (const field of required) {
-      if (!body[field]) {
-        return NextResponse.json({ error: `Field '${field}' is required` }, { status: 400 });
-      }
+    const validationError = validateEmployeePayload(body);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
     // Create new employee
@@ -94,6 +119,11 @@ export async function PUT(request: NextRequest) {
     const index = employees.findIndex((e) => e.id === body.id);
     if (index === -1) {
       return NextResponse.json({ error: "Employee not found" }, { status: 404 });
+    }
+
+    const validationError = validateEmployeePayload(body, body.id);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
     // Update employee

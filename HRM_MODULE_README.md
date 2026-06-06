@@ -32,7 +32,7 @@ src/
 │       └── payslips/page.tsx           # Payslip generation & sending UI
 ├── lib/
 │   ├── pdf-generator.ts                # PDFKit-based payslip PDF generation
-│   └── gmail-integration.ts            # Email sending with nodemailer
+│   └── email-service.ts                # SendGrid-based transactional email
 └── data/
     └── mockData.ts                     # Database schemas & mock data
 ```

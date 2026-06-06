@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Megaphone, BookOpen, FileText,
-  LogOut, Menu, X, GraduationCap, ChevronRight, Bell, Users, DollarSign, Mail
+  LogOut, Menu, X, ChevronRight, Bell, Users, DollarSign, Mail, ClipboardCheck
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Role } from "@/data/mockData";
@@ -30,6 +30,7 @@ const NAV: NavItem[] = [
   // HRM Module (Admin only)
   { label: "Employees",    href: "/admin/hrm/employees",          icon: <Users size={18}/>,           roles: ["admin"] },
   { label: "Payroll Configuration", href: "/admin/hrm/payroll-config", icon: <DollarSign size={18}/>, roles: ["admin"] },
+  { label: "Payroll Runs", href: "/admin/hrm/payroll-runs",       icon: <ClipboardCheck size={18}/>,  roles: ["admin"] },
   { label: "Payslips",     href: "/admin/hrm/payslips",           icon: <Mail size={18}/>,            roles: ["admin"] },
 ];
 
@@ -129,7 +130,7 @@ export default function PortalShell({ children }: { children: React.ReactNode })
           </div>
           {userNav.map((item, idx) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
-            const isHrmSection = item.label === "Employees" || item.label === "Payroll Configuration" || item.label === "Payslips";
+            const isHrmSection = item.href.startsWith("/admin/hrm");
             const showHrmDivider = idx > 0 && isHrmSection && !userNav[idx-1].label.includes("Employee") && !userNav[idx-1].label.includes("Payroll");
             return (
               <div key={item.href}>

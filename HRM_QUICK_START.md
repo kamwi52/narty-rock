@@ -12,10 +12,40 @@ This installs:
 - `pdfkit` — PDF generation
 - `nodemailer` — Email sending
 - `googleapis` — Gmail API (optional)
+- `prisma` — Database ORM
+- `@aws-sdk/client-s3` — AWS S3 Storage
+- `@sendgrid/mail` — Production Email Service
+- `@aws-sdk/s3-request-presigner` — Secure URL generation
 
-### 2. Configure Email (Choose One Method)
+### 2. Set Up Database
 
-#### Method A: Gmail SMTP (Easiest)
+1. Ensure a PostgreSQL instance is running.
+2. Add `DATABASE_URL` to your `.env.local`.
+3. Add `ENCRYPTION_KEY` to your `.env.local`. Generate a key using:
+   `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+4. Run migrations: `npx prisma migrate dev --name init`
+
+### 3. Set Up Cloud Storage (Production)
+
+1. Create an S3 Bucket on AWS.
+2. Create an IAM user with `PutObject` and `GetObject` permissions for the bucket.
+3. Add `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_S3_BUCKET_NAME` to your `.env.local`.
+
+### 3. Configure Email (Choose One Method)
+
+#### Method A: SendGrid (Recommended for Production)
+
+1. Sign up for a SendGrid account.
+2. Create an API Key with "Mail Send" permissions.
+3. Verify your Sender Identity (Domain or Single Sender).
+4. Edit `.env.local`:
+   ```env
+   EMAIL_SERVICE=sendgrid
+   SENDGRID_API_KEY=SG.xxxxxxxxxxxxxx
+   EMAIL_FROM=payroll@nartyrock.edu.zm
+   ```
+
+#### Method B: Gmail SMTP (Development Only)
 
 1. Go to [Google App Passwords](https://myaccount.google.com/apppasswords)
    - Make sure 2-Factor Authentication is enabled first

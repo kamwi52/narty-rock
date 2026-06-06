@@ -33,11 +33,12 @@ export async function POST(request: NextRequest) {
     const errors: Array<{ recordId: string; error: string }> = [];
 
     // NOTE: The production filesystem on Netlify is read-only. 
-    // We use /tmp for ephemeral processing, but these files won't be 
-    // accessible via static URLs. In production, upload to a storage bucket.
+    // /tmp is available for temporary storage during the request lifecycle.
     const pdfDir = path.join("/tmp", "payslips");
 
-    if (!fs.existsSync(pdfDir)) {
+    // Only attempt directory creation in non-production environments 
+    // or handle gracefully in /tmp
+    if (typeof window === 'undefined' && !fs.existsSync(pdfDir)) {
       fs.mkdirSync(pdfDir, { recursive: true });
     }
 
@@ -80,7 +81,10 @@ export async function POST(request: NextRequest) {
 
         // Save PDF to file system
         const filename = `payslip_${employee.id}_${record.month}.pdf`;
-        const filepath = path.join(pdfDir, filename);
+        // Using a timestamped or unique filename prevents collisions in /tmp
+        const uniqueFilename = `${Date.now()}_${filename}`;
+        const filepath = path.join(pdfDir, uniqueFilename);
+        
         fs.writeFileSync(filepath, pdfBuffer);
 
         // Create payslip record
@@ -89,7 +93,6 @@ export async function POST(request: NextRequest) {
           payrollRecordId: recordId,
           employeeId: record.employeeId,
           month: record.month,
-          pdfUrl: `/payslips/${filename}`,
           generatedAt: new Date().toISOString(),
           sentViaEmail: false,
         };
